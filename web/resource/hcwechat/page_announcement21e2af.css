@@ -1,0 +1,38 @@
+.announcement_box .inner{padding:10px 75px}.announcement_box .announcement_title{padding-bottom:12px;text-align:center;font-size:18px}.announcement_box .sign,.announcement_box .company_sign{padding-top:28px;text-align:right}.announcement_box h1,.announcement_box h2,.announcement_box h3,.announcement_box h4,.announcement_box h5,.announcement_box h6{font-weight:400;font-size:14px}.announcement_box img{max-width:100%}.announcement_box pre{white-space:pre-wrap}.announcement_box .gap{padding-bottom:1em}.announcement_box .no_gap{padding-bottom:0}.announcement_box .strong{font-weight:700}.announcement_box .normal{font-weight:400}
+.head_box {
+position: relative;
+background-color: #fff;
+border-top: 4px solid #44b549;
+border-bottom: 1px solid #d9dadc;
+}
+.head .inner.wrp {
+width: 1000px;
+margin-left: auto;
+margin-right: auto;
+}
+.head .inner {
+height: 60px;
+}
+.logo {
+float: left;
+margin-top: 10px;
+font-size: 24px;
+}
+.inner>.account {
+float: right;
+padding-top: 10px;
+}
+.logo a:before {
+display: inline-block;
+content: url(./bg_logo218877.png);
+}
+.logo {
+font-size: 24px;
+}
+.category-btn {
+padding: 20px;
+}
+.breadcrumb {
+margin-top: 20px;
+background: #F9F9F9;
+}

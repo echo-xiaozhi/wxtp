@@ -1,0 +1,202 @@
+{template 'common/header-login'}
+<link rel="stylesheet" type="text/css" href="./resource/midoo/register.css">
+<style type="text/css">
+    a:link { text-decoration: none; } 
+    a:visited { text-decoration: none; } 
+</style>
+<script type="text/javascript">
+    
+    function formcheck(){
+
+        var showError = function(text){
+       
+            $("#operate_tips").html(text+'<span class="down_row"></span>');
+            $("#operate_tips").fadeIn();
+        }
+        var val = $.trim($('#u').val());
+        if(val.length == 0 ) {
+            showError("请输入用户名！");
+            return false ;
+        }
+
+        if($('#p').val() == '') {
+            showError("请输入密码!");
+            return false;
+        }
+
+}
+  
+    function regcheck(){
+
+     var showError = function(text){
+       
+            $("#reg_tips").html(text+'<span class="down_row"></span>');
+            $("#reg_tips").fadeIn();
+        }
+        var val = $.trim($('#regu').val());
+        if(val.length == 0 ) {
+            showError("请输入用户名！");
+            return false ;
+        }
+
+        if($('#regp').val() == '') {
+            showError("请输入密码!");
+            return false;
+        }
+         if($('#repassword').val() == '') {
+            showError("请再次输入密码!");
+            return false;
+        }
+
+        if($('#regp').val().length < 8) {
+            showError("密码长度不得低于8位!");
+            return false;
+        }
+
+   
+
+        if($('#repassword').val() != '') {
+           if( $('#repassword').val() != $('#regp').val() ) 
+           {
+            showError("两次输入的密码不一致!");
+            return false;
+           }
+    }
+         if(typeof ($('#regmust').val()) != 'undefined') {
+
+          if(  ($('#repassword').val().length >=8) && ($('#regmust').val() == '') ) {
+            showError("必填项必须填写!");
+            return false;
+        }
+    }
+     
+    }
+</script>
+<div class="index">
+  <div id="heading" class="heading" style="width:100%; ">
+    <canvas id="starCanvas" width="1920" height="700"></canvas>
+    <div class="head-top" style="left: 50%; margin-left: -590px; width: 1180px;"> <img style="margin-left: 17px;position: absolute;top: 20px;float: left;width: 200px;" src="{if !empty($_W['setting']['copyright']['flogo'])}{php echo tomedia($_W['setting']['copyright']['flogo']);}{else}./resource/midoo/images/logo_beta.png{/if}" border="0" >
+      <div class="link"> <a href="#">首页</a> <a href="{php echo url('article/news-show/list');}" target="_blank">新闻</a> <a href="{php echo url('article/notice-show/list');}" target="_blank">公告</a> </div>
+    </div>
+    <img class="wording" src="./resource/midoo/images/wording.png" style="width: 459px;">
+    <!--[if lt IE 8]>
+        <img class="wording wording400" src="http://combo.b.qq.com/store/src/themes/mpPortal/register/images/index/wordingX400.png" style="display:none;">
+        <![endif]-->
+    <div class="iframe">
+      <div class="iframe-title">输入账号登陆公众平台</div>
+      <div  id="login">
+        <div id="header" class="header1">
+          <div class="switch" id="switch"> <a class="switch_btn" hidefocus="true" id="switcher_qlogin" href="{url 'user/login'}"tabindex="7">快速登录</a> <a class="switch_btn_focus" hidefocus="true" id="switcher_plogin" href="{url 'user/register'}" tabindex="8">帐号注册</a>
+            <div class="switch_bottom" id="switch_bottom" style="margin-left: -5px;left: 160px; width: 77px; position: absolute;"></div>
+          </div>
+        </div>
+        <div class="web_qr_login" id="web_qr_login" style="display: none;">
+          <div class="web_qr_login_show" id="web_qr_login_show">
+            <div class="web_login" id="web_login">
+              <div class="login_form">
+                <form id="loginform" autocomplete="off" name="loginform" action="{url 'user/login'}" method="post"  role="form" style="margin:0" onsubmit="return formcheck();">
+                  <div class="uinArea" id="uinArea">
+                    <label class="input_tips" id="uin_tips" for="u" >请输入用户名</label>
+                    <div class="inputOuter" id="inputOuter1">
+                      <input type="text" class="inputstyle" id="u" name="username"  value="" tabindex="1"></div>
+                    <ul class="email_list" id="email_list" style="display: none;">
+                    </ul>
+                  </div>
+                  <div class="pwdArea" id="pwdArea">
+                    <label class="input_tips" id="pwd_tips" for="p" style="display: block;">密码</label>
+                    <div class="inputOuter" id="inputOuter2">
+                      <input type="password" class="inputstyle password" id="p" name="password" value="" maxlength="16" tabindex="2">
+                    </div>
+                  </div>
+                  {if !empty($_W['setting']['copyright']['verifycode'])}
+                  <div class="verifyArea" id="verifyArea">
+                    <div class="verifyinputArea" id="verifyinputArea">
+                      <label class="input_tips" id="vc_tips" for="verifycode" style="display: block;">验证码</label>
+                      <div class="inputOuter">
+                        <input type="text" class="inputstyle verifycode" id="verify" name="verify" value="" tabindex="3">
+                      </div>
+                    </div>
+                    <div class="verifyimgArea" id="verifyimgArea" style="margin-top: 10px;"> <img class="verifyimg" id="verifyimg" title="看不清，换一张" src="./index.php?c=utility&a=code&" class="img-rounded" style="cursor:pointer;" onclick="this.src='./index.php?c=utility&a=code&' + Math.random();"> </div>
+                  </div>
+                  {/if}
+                  <div class="submit"><a class="login_button" href="javascript:void(0);" hidefocus="true">
+                    <input type="submit" tabindex="6"   name="submit" value="登 录" class="btn" id="login_button">
+                    <input name="token" value="{$_W['token']}" type="hidden" />
+                    </a> </div>
+                </form>
+              </div>
+              <div class="bottom" id="bottom_web" style="display: block;"><a href="http://wpa.qq.com/msgrd?v=3&uin={if empty($_W['setting']['copyright']['qq'])}847382876{else}{$_W['setting']['copyright']['qq']}{/if}&site=qq&menu=yes" class="link1" id="forgetpwd" target="_blank">忘了密码？</a> <span class="dotted">|</span> <a href="{url 'user/register'}" class="link1" target="_blank">注册新帐号</a> <span class="dotted">|</span> <a class="link1" id="feedback_web" href="http://wpa.qq.com/msgrd?v=3&uin={if empty($_W['setting']['copyright']['qq'])}847382876{else}{$_W['setting']['copyright']['qq']}{/if}&site=qq&menu=yes" target="_blank">联系我们</a> </div>
+            </div>
+          </div>
+        </div>
+        <div class="web_qr_login" id="web_qr_register" style="display: block;">
+          <div class="web_qr_login_show" id="web_qr_login_show">
+            <div class="web_login" id="web_login">
+              <div class="login_form">
+                <form id="loginform" autocomplete="off" name="loginform" action="{url 'user/register'}"  method="post" role="form" style="margin:0" onsubmit="return regcheck();">
+                  <div class="login_input_panel" id="js_mainContent">
+                    <div class="login_input"> <i class="icon_login   un"> </i>
+                      <input id="regu" name="username" type="text" placeholder="请输入用户名">
+                    </div>
+                    <div class="login_input"> <i class="icon_login   pwd"> </i>
+                      <input name="password" type="password" id="regp" placeholder="请输入密码">
+                    </div>
+                    <div class="login_input"> <i class="icon_login pwd"> </i>
+                      <input name="password" type="password" id="repassword" placeholder="请再次输入密码">
+                    </div>
+                    {if  $extendfields}                     {loop   $extendfields   $item}
+                    <div class="login_input"> <i class="icon_login icon_arrow"> </i>
+                      <input type="text"  {if $item['required']} id="regmust" {/if} name="{$item['field']}" value="" placeholder="请输入{$item['title']}{if     $item['required']}（必填）{/if}">
+                    </div>
+                    {/loop}                  {/if}   
+                    {if $setting['register']['code']}
+                    <div class="login_input"> <i class="icon_login icon_speaker"> </i>
+                      <input name="code" type="text" placeholder="请输入验证码" style="display:inline;">
+                    </div>
+                    <div class="login_btn_panel"> <img src="./index.php?c=utility&a=code&" class="img-rounded" style="cursor:pointer;" onclick="this.src='./index.php?c=utility&a=code&' +   Math.random();"> </div>
+                    {/if}
+                    <div class="login_btn_panel">
+                      <input type="submit" name="submit" value="注册" class="btn_login">
+                      <input name="token" value="{$_W['token']}"  type="hidden" >
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div class="bottom" id="bottom_web" style="display: block;"><a class="link1" id="feedback_web" href="http://wpa.qq.com/msgrd?v=3&uin={if empty($_W['setting']['copyright']['qq'])}847382876{else}{$_W['setting']['copyright']['qq']}{/if}&site=qq&menu=yes" target="_blank">忘了密码？</a> <span class="dotted">|</span> <a href="./index.php?c=user&a=login&" class="link1" target="_blank">已有账号</a> <span class="dotted">|</span> <a class="link1" id="feedback_web" href="http://wpa.qq.com/msgrd?v=3&uin={if empty($_W['setting']['copyright']['qq'])}847382876{else}{$_W['setting']['copyright']['qq']}{/if}&site=qq&menu=yes" target="_blank">联系我们</a> </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="procedure" id="procedure"> <img class="words" src="./resource/midoo/images/procedure-words.png"> <a href="#switcher_plogin">立即注册<span class="right"></span></a>
+    <div class="pics">
+      <div class="step-pic"> <img src="./resource/midoo/images/step2.png">
+        <p>填写注册用户名</p>
+      </div>
+      <div class="step-pic-arrow"> <img src="./resource/midoo/images/right-b.png"> </div>
+      <div class="step-pic"> <img src="./resource/midoo/images/step3.png">
+        <p>填写密码</p>
+      </div>
+      <div class="step-pic-arrow"> <img src="./resource/midoo/images/right-b.png"> </div>
+      <div class="step-pic"> <img src="./resource/midoo/images/step4.png">
+        <p>填写个人信息</p>
+      </div>
+      <div class="step-pic-arrow"> <img src="./resource/midoo/images/right-b.png"> </div>
+      <div class="step-pic"> <img src="./resource/midoo/images/step5.png">
+        <p>提交平台审核</p>
+        <p class="gray">开通请联系在线客服</p>
+      </div>
+    </div>
+  </div>
+  <div class="footer" id="footer">
+    <p> {if empty($_W['setting']['copyright']['footerleft'])}Powered by <a href="http://www.we7.cc"><b>微擎</b></a> v{IMS_VERSION} &copy; 2014-2017 <a href="http://www.we7.cc">www.we7.cc</a>{else}{$_W['setting']['copyright']['footerleft']}{/if} </p>
+    <p> {if empty($_W['setting']['copyright']['footerright'])}<a href="http://www.we7.cc">关于微擎</a>&nbsp;&nbsp;<a href="http://bbs.we7.cc">微擎论坛</a>&nbsp;&nbsp;<a href="http://wpa.b.qq.com/cgi/wpa.php?ln=1&key=XzkzODAwMzEzOV8xNzEwOTZfNDAwMDgyODUwMl8yXw">联系客服</a>{else}{$_W['setting']['copyright']['footerright']}{/if} </p>
+  </div>
+</div>
+<!-- end of container -->
+<script language="javascript">
+if(typeof(pgvMain) == 'function')
+pgvMain();
+</script>
+</body></html>
